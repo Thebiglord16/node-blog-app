@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const {Post} = require('../models');
+const verifyToken = require('../middleware/authentication');
 
-router.get('/', function (req, res) {
+router.get('/', verifyToken, function(req, res){
     Post.findAll().then((posts) => {
         res.status(200).send(posts);
     }).catch((err) => {
@@ -10,7 +11,7 @@ router.get('/', function (req, res) {
     })
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:id', verifyToken, function (req, res) {
     Post.findAll({
         where: {id: req.params.id}
     }).then((posts) => {
@@ -20,7 +21,7 @@ router.get('/:id', function (req, res) {
     });
 });
 
-router.post('/', function (req, res) {
+router.post('/', verifyToken, function (req, res) {
     Post.create(req.body).then((post) => {
         res.status(200).send(post);
     }).catch((err) => {
@@ -28,7 +29,7 @@ router.post('/', function (req, res) {
     })
 });
 
-router.put('/:id', function (req, res) {
+router.put('/:id', verifyToken, function (req, res) {
     Post.update(
         {
             title: req.body.title,
@@ -46,7 +47,7 @@ router.put('/:id', function (req, res) {
     });
 });
 
-router.delete('/:id', function (req, res) {
+router.delete('/:id', verifyToken, function (req, res) {
     Post.destroy(
         {
             where:{
