@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const {Comment} = require('../models');
+const {Comment, User} = require('../models');
+
+const hydrateComments= (comments)=>{
+    comments.forEach((comment) =>{
+        User.findByPk(comment.userId).then((user)=>{
+            comment.username = user.firstName + user.lastName;
+        });
+    });
+}
 
 router.get('/', function (req, res) {
     Comment.findAll().then((comments) => {
@@ -12,8 +20,13 @@ router.get('/', function (req, res) {
 
 router.get('/:postId', function (req, res) {
     Comment.findAll({
-        where: {postId: req.params.postId}
+        where: {postId: req.params.postId},
+        include:[{
+            model: User,
+            attributes: ['firstName', 'lastName']
+        }]
     }).then((comments) => {
+        hydrateComments(comments);
         res.status(200).send(comments);
     }).catch((err) => {
         res.status(404).send(err);

@@ -15,7 +15,7 @@ function CreatePostComponent() {
     const onSubmit = (e) => {
         e.preventDefault();
         const config = {
-            headers:{
+            headers: {
                 Authorization: user.token
             }
         }
@@ -31,17 +31,18 @@ function CreatePostComponent() {
 
     return (
         <>
-            <Form className="credentials-form">
+            <Form className="credentials-form" onSubmit={onSubmit}>
                 <Form.Group className="mb-3">
                     <Form.Label>Title</Form.Label>
-                    <Form.Control type="text" placeholder="Title" name="title" onChange={onChange}/>
+                    <Form.Control type="text" placeholder="Title" name="title" onChange={onChange} required/>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Content</Form.Label>
-                    <Form.Control as="TextArea" rows={8} placeholder="Content" name="content" onChange={onChange}/>
+                    <Form.Control as="TextArea" rows={8} placeholder="Content" name="content" onChange={onChange}
+                                  required/>
                 </Form.Group>
 
-                <Button variant="primary" type="submit" onClick={onSubmit}>
+                <Button variant="primary" type="submit">
                     Create Post
                 </Button>
             </Form>

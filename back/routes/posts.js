@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {Post} = require('../models');
+const {Post, User} = require('../models');
 const verifyToken = require('../middleware/authentication');
 
 router.get('/',function(req, res){
@@ -13,7 +13,11 @@ router.get('/',function(req, res){
 
 router.get('/:id', function (req, res) {
     Post.findOne({
-        where: {id: req.params.id}
+        where: {id: req.params.id},
+        include: [{
+            model: User,
+            attributes: ['firstName', 'lastName']
+        }]
     }).then((posts) => {
         res.status(200).send(posts);
     }).catch((err) => {

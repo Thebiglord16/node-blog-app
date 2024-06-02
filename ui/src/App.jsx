@@ -14,7 +14,7 @@ function App() {
     const [register, setRegister] = useState(false);
     const [home, setHome] = useState(true);
     const [createPost, setCreatePost] = useState(false);
-    const onNavClick = (st)=>{
+    const onNavClick = (st) => {
         setLogin(false);
         setRegister(false);
         setHome(false);
@@ -22,34 +22,34 @@ function App() {
         st(true);
     }
     const onLogOut = () => {
-        setUser({userId: undefined, token: undefined, setUser:setUser});
+        setUser({userId: undefined, token: undefined, setUser: setUser});
     }
-  return (
-      <UserContext.Provider value={{user, setUser}}>
-      <Navbar expand="lg" className="bg-body-tertiary page-header">
-        <Container>
-          <Navbar.Brand href="#home" onClick={()=>onNavClick(setHome)}>Welcome to the blog! </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-              { !user.userId &&
-              <Nav className="me-auto">
-                      <Nav.Link onClick={()=>onNavClick(setLogin)}>Login</Nav.Link>
-                      <Nav.Link onClick={()=>onNavClick(setRegister)}>Register</Nav.Link>
-              </Nav>}
-              { user.userId &&
-                  <Nav className="me-auto">
-                      <Nav.Link onClick={()=>onNavClick(setCreatePost)}>Make a Post</Nav.Link>
-                      <Nav.Link onClick={()=>onLogOut()}>Log out</Nav.Link>
-                  </Nav>}
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
-          {home && <PostWallComponent/>}
-          {isLogin && <LoginFormComponent/>}
-          {register && <RegisterForm/>}
-          {createPost && <CreatePostComponent/>}
-      </UserContext.Provider>
-  );
+    return (
+        <UserContext.Provider value={{user, setUser}}>
+            <Navbar expand="lg" className="bg-body-tertiary page-header">
+                <Container>
+                    <Navbar.Brand href="#home" onClick={() => onNavClick(setHome)}>Welcome to the blog! </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        {!user.userId &&
+                            <Nav className="me-auto">
+                                <Nav.Link onClick={() => onNavClick(setLogin)}>Login</Nav.Link>
+                                <Nav.Link onClick={() => onNavClick(setRegister)}>Register</Nav.Link>
+                            </Nav>}
+                        {user.userId &&
+                            <Nav className="me-auto">
+                                <Nav.Link onClick={() => onNavClick(setCreatePost)}>Make a Post</Nav.Link>
+                                <Nav.Link onClick={() => onLogOut()}>Log out</Nav.Link>
+                            </Nav>}
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+            {home && <PostWallComponent/>}
+            {isLogin && <LoginFormComponent/>}
+            {register && <RegisterForm/>}
+            {createPost && <CreatePostComponent/>}
+        </UserContext.Provider>
+    );
 }
 
 export default App
