@@ -46,7 +46,9 @@ Following on the topic of authetication, storing passwords as plain text is a bi
 </br>
 The ORM, in order to easily connect to a database and have models that accordingly represent the tables in the databse I used sequelize as the ORM for the project, it has drivers for many databases and I used PostgreSQL as my database of choice, documentation is enough guidance on how to use it and can be found here: https://sequelize.org/docs/v6/getting-started/.
 ### The UI
-The UI uses ReactJS framework, making web uis in react is simple and fast, you can find more at: https://react.dev/reference/react
+The UI uses ReactJS framework, making web uis in react is simple and fast, you can find more at: https://react.dev/reference/react.
+</br>
+To create the project and have hot-reloading I used the npm-create vite@latest command, which creates a project with your prefered framework and allows for hot-reloading, making development easier, you can find the needed information here: https://vitejs.dev/guide/.
 </br>
 Additionally some libraries where used to make the process even simpler:
 </br>
