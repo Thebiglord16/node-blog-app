@@ -42,6 +42,14 @@ The API uses express as a web framework. All information used for the project ca
 The API uses JSONWebToken for authentication, JWT are a common modern way to autheticate users in APIs and offer some neat features. In particular I decided to use JWTs as the payload is of great use later in the UI logic. After some reading in stackoverflow I found jsonwebtoken as the easiest JWT node library to use, and using express easy to implemment middleware functions I was able to create a simple yet robust authetication for the api.
 Following on the topic of authetication, storing passwords as plain text is a big NO, so I used bcrypt to easily hash and salt passwords and stored the hashed password in the database.
 The ORM, in order to easily connect to a database and have models that accordingly represent the tables in the databse I used sequelize as the ORM for the project, it has drivers for many databases and I used PostgreSQL as my database of choice, documentation is enough guidance on how to use it and can be found here: https://sequelize.org/docs/v6/getting-started/.
-###The UI
+### The UI
+The UI uses ReactJS framework, making web uis in react is simple and fast, you can find more at: https://react.dev/reference/react
+Additionally some libraries where used to make the process even simpler:
+react-bootstrap is a widelly used react library that has prebuilt react components with bootstrap styles you can find more at: https://react-bootstrap.netlify.app/docs/getting-started/why-react-bootstrap
+Axios is a widely used JS and TS library that makes the process of doing requests simpler. It was used to make all the API calls required for the UI functionality, all information here: https://axios-http.com/docs/intro
+jwt-decode, after doing the research on the best approach on how to handle authentication and deciding to use JWTs it was necessary to decode the payload of the JWTs in the UI to track user data, I decided to use jwt-decode after some stack-overflow, information on how to use it can be found here: https://www.npmjs.com/package/jwt-decode.
+
+Let me know if you have any questions!
+
 
 
