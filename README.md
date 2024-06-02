@@ -23,7 +23,7 @@ This project has an API that exposes 3 services to the UI of the blog, to run th
 npm run dev
 ```
 That's it! you got the API running and can start doing some requests!
-##3. UI setup
+## 3. UI setup
 This project has an UI that allows client interaction to make requests to the API.
 First you have to install all the dependencies, in your console navigate to the ui/ directory and run:
 ```
@@ -36,8 +36,8 @@ npm run dev
 
 That's it! everything should be running correctly and you can start blogging!
 
-##3. How was it done?
-###The API
+## 3. How was it done?
+### The API
 The API uses express as a web framework. All information used for the project can be found at: https://expressjs.com/.
 The API uses JSONWebToken for authentication, JWT are a common modern way to autheticate users in APIs and offer some neat features. In particular I decided to use JWTs as the payload is of great use later in the UI logic. After some reading in stackoverflow I found jsonwebtoken as the easiest JWT node library to use, and using express easy to implemment middleware functions I was able to create a simple yet robust authetication for the api.
 Following on the topic of authetication, storing passwords as plain text is a big NO, so I used bcrypt to easily hash and salt passwords and stored the hashed password in the database.
