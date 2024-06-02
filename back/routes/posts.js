@@ -3,7 +3,7 @@ const router = express.Router();
 const {Post} = require('../models');
 const verifyToken = require('../middleware/authentication');
 
-router.get('/', verifyToken, function(req, res){
+router.get('/',function(req, res){
     Post.findAll().then((posts) => {
         res.status(200).send(posts);
     }).catch((err) => {
@@ -11,8 +11,8 @@ router.get('/', verifyToken, function(req, res){
     })
 });
 
-router.get('/:id', verifyToken, function (req, res) {
-    Post.findAll({
+router.get('/:id', function (req, res) {
+    Post.findOne({
         where: {id: req.params.id}
     }).then((posts) => {
         res.status(200).send(posts);

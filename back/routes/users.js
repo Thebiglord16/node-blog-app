@@ -27,6 +27,18 @@ router.post('/login', async (req, res) => {
             res.status(401).send("Wrong username or password");
         }
     } catch(err){
+        console.log(err);
+        res.status(500).send("An error occured and we where unable to log you in");
+    }
+});
+
+router.get('/:id', (req, res) => {
+    try {
+        User.findByPk(req.params.id).then((user) => {
+            res.status(200).send({name:user.firstName, lastName:user.lastName});
+        })
+    } catch(err){
+        console.log(err);
         res.status(500).send("An error occured and we where unable to log you in");
     }
 });

@@ -10,9 +10,9 @@ router.get('/', function (req, res) {
     })
 });
 
-router.get('/:id', function (req, res) {
+router.get('/:postId', function (req, res) {
     Comment.findAll({
-        where: {id: req.params.id}
+        where: {postId: req.params.postId}
     }).then((comments) => {
         res.status(200).send(comments);
     }).catch((err) => {
