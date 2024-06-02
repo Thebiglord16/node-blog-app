@@ -59,7 +59,7 @@ router.delete('/:id', verifyToken, function (req, res) {
             }
         }
     ).then((result) => {
-        res.status(200).send(result);
+        res.status(204).send();
     }).catch((err) => {
         res.status(404).send(err);
     })

@@ -11,7 +11,11 @@ router.post('/register', async (req, res) => {
         const user = await User.create({firstName, lastName, email, password:hashed});
         res.status(201).send(user);
     }catch(err){
-        res.status(500).send("Registration failed");
+        if(err.message === "Validation error"){
+            res.status(400).send("An user with that email already exists");
+        } else {
+            res.status(500).send("Registration failed");
+        }
     }
 });
 
@@ -39,7 +43,7 @@ router.get('/:id', (req, res) => {
         })
     } catch(err){
         console.log(err);
-        res.status(500).send("An error occured and we where unable to log you in");
+        res.status(500).send("Unable");
     }
 });
 

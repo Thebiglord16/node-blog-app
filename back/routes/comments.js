@@ -1,22 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const verifyToken = require('../middleware/authentication');
 const {Comment, User} = require('../models');
-
-const hydrateComments= (comments)=>{
-    comments.forEach((comment) =>{
-        User.findByPk(comment.userId).then((user)=>{
-            comment.username = user.firstName + user.lastName;
-        });
-    });
-}
-
-router.get('/', function (req, res) {
-    Comment.findAll().then((comments) => {
-        res.status(200).send(comments);
-    }).catch((err) => {
-        res.status(404).send(err);
-    })
-});
 
 router.get('/:postId', function (req, res) {
     Comment.findAll({
@@ -26,14 +11,13 @@ router.get('/:postId', function (req, res) {
             attributes: ['firstName', 'lastName']
         }]
     }).then((comments) => {
-        hydrateComments(comments);
         res.status(200).send(comments);
     }).catch((err) => {
         res.status(404).send(err);
     });
 });
 
-router.post('/', function (req, res) {
+router.post('/', verifyToken, function (req, res) {
     Comment.create(req.body).then((comment) => {
         res.status(200).send(comment);
     }).catch((err) => {
@@ -41,7 +25,7 @@ router.post('/', function (req, res) {
     })
 });
 
-router.put('/:id', function (req, res) {
+router.put('/:id', verifyToken,function (req, res) {
     Comment.update(
         {
             content: req.body.content,
@@ -58,7 +42,7 @@ router.put('/:id', function (req, res) {
     });
 });
 
-router.delete('/:id', function (req, res) {
+router.delete('/:id', verifyToken, function (req, res) {
     Comment.destroy(
         {
             where:{

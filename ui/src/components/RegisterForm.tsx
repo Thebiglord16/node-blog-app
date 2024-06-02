@@ -6,6 +6,7 @@ import axios from "axios";
 function RegisterForm() {
     const [newUser, setNewUser] = useState(new Map());
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const onChange = e => {
         setNewUser(new Map(newUser).set(e.target.name, e.target.value));
     }
@@ -21,7 +22,10 @@ function RegisterForm() {
             }).then(() => {
                 alert("Signed up! try logging in");
                 window.location.reload();
-            }).catch(() => setError(true));
+            }).catch((err) => {
+                setError(true)
+                setErrorMessage(err.response.data);
+            });
         }
     }
 
@@ -61,7 +65,7 @@ function RegisterForm() {
                     Submit
                 </Button>
             </Form>
-            {error && <p color="red">Registration failed</p>}
+            {error && <p style={{marginTop:"2%", marginLeft:"20%", color:"red"}}>Registration Failed: {errorMessage}</p>}
         </>
 
     );

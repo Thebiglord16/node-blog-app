@@ -1,5 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import {FormEvent, useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Col} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -19,10 +19,7 @@ function PostWallComponent() {
     const openPost = (post) => {
         fetch('http://127.0.0.1:3000/posts/' + post.id)
             .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                setOpenedPost(data)
-            });
+            .then(data => setOpenedPost(data));
 
         fetch('http://127.0.0.1:3000/comments/' + post.id)
             .then(res => res.json())
@@ -100,6 +97,20 @@ function PostWallComponent() {
     const cancelComment = () => {
         setCommenting(false);
     }
+    const deletePost = () =>{
+        let config = {
+            headers: {
+                Authorization: user.token
+            }
+        }
+        axios.delete('http://127.0.0.1:3000/posts/' + openedPost.id, config).then(()=> {
+            fetch('http://127.0.0.1:3000/posts')
+                .then(res => res.json())
+                .then(data => setPosts(data))
+                .catch(error => console.log(error));
+            closePost();
+        });
+    }
     return (
         <>
             <div className="post-wall container-fluid">
@@ -135,10 +146,30 @@ function PostWallComponent() {
                         {user.userId &&
                             <Button className="post-button" variant="outline-dark" onClick={commentPost}>Add a
                                 comment</Button>}
+                        {user.userId && user.userId === openedPost?.userId &&
+                            <Button className="post-button" variant="danger" onClick={deletePost}>Delete post</Button>
+                        }
                         <Button className="post-button" variant="outline-dark" onClick={closePost}>Back</Button>
                     </div>
                 )
                 }
+            </div>
+            <div className="edit-container">
+                {commenting && (
+                    <Form onSubmit={onCommentSubmit}>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Content</Form.Label>
+                            <Form.Control as="textArea" name="content" onChange={onCommentChange} rows={8}
+                                          placeholder="Comment something!" required/>
+                        </Form.Group>
+                        <Button className="post-button" variant="outline-dark" type="submit">
+                            Save changes
+                        </Button>
+                        <Button className="post-button" variant="outline-dark" onClick={cancelComment}>
+                            Back
+                        </Button>
+                    </Form>
+                )}
             </div>
             {isOpen && !editing &&
                 <>
@@ -168,23 +199,6 @@ function PostWallComponent() {
                             Save changes
                         </Button>
                         <Button className="post-button" variant="outline-dark" onClick={cancelEdit}>
-                            Back
-                        </Button>
-                    </Form>
-                )}
-            </div>
-            <div className="edit-container">
-                {commenting && (
-                    <Form onSubmit={onCommentSubmit}>
-                        <Form.Group className="mb-3">
-                            <Form.Label>Content</Form.Label>
-                            <Form.Control as="textArea" name="content" onChange={onCommentChange} rows={8}
-                                          placeholder="Comment something!" required/>
-                        </Form.Group>
-                        <Button className="post-button" variant="outline-dark" type="submit">
-                            Save changes
-                        </Button>
-                        <Button className="post-button" variant="outline-dark" onClick={cancelComment}>
                             Back
                         </Button>
                     </Form>

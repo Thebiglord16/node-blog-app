@@ -1,3 +1,9 @@
+html,body, #root {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
 .post-wall{
     padding-left: 10%;
     padding-right: 10%;
@@ -48,4 +54,12 @@
 .comment-wall > p {
     padding-left: 1%;
     padding-right: 1%;
+}
+
+.welcome-message{
+    height: 80%;
+    font-size: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

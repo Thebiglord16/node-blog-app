@@ -9,6 +9,7 @@ const LoginFormComponent = () => {
     const [newUser, setNewUser] = useState(new Map());
     const [error, setError] = useState(false);
     const {user, setUser} = useContext(UserContext);
+    const [errorMessage, setErrorMessage] = useState("");
     const onChange = e => {
         setNewUser(new Map(newUser).set(e.target.name, e.target.value));
     }
@@ -24,7 +25,7 @@ const LoginFormComponent = () => {
                 const payload = jwtDecode(token);
                 setUser({userId: payload.userId, token: token});
             }).catch((err) => {
-                console.log(err);
+                setErrorMessage(err.response.data)
                 setError(true)
             });
         }
@@ -49,14 +50,14 @@ const LoginFormComponent = () => {
                         Submit
                     </Button>
                 </Form>}
-            {user.userId && <div>
+            {user.userId && <div className="welcome-message">
                 <p>
                     Welcome to the blog! start blogging!
                 </p>
             </div>
 
             }
-            {error && <p>Unable to log you in</p>}
+            {error && <p style={{color:"red", marginTop:"1%", marginLeft:"20%"}}>Unable to log you in: {errorMessage}</p>}
         </>
     )
 }
