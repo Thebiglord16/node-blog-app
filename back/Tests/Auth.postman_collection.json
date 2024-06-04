@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "3957d79a-4c4a-46ca-be42-cb718993be7b",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14452752"
+	},
+	"item": [
+		{
+			"name": "Registration test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Payload must be valid and have a body\", function () { \r",
+							"     pm.response.to.be.success; \r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"        \"properties\":{\r",
+							"        \"id\":{\"type\": \"integer\"},\r",
+							"        \"firstName\":{\"type\": \"string\"},\r",
+							"        \"lastName\":{\"type\": \"string\"},\r",
+							"        \"email\":{\"type\":\"string\"},\r",
+							"        \"password\":{\"type\":\"string\"},\r",
+							"        \"createdAt\":{\"type\":\"string\"},\r",
+							"        \"updatedAt\":{\"type\":\"string\"}\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test('Post schema is valid', function(){\r",
+							"    pm.expect(tv4.validate(pm.response.json, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"email\", JSON.parse(responseBody).email);\r",
+							"postman.setEnvironmentVariable(\"userId\", JSON.parse(responseBody).id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\":\"Postman\",\r\n    \"lastName\":\"test\",\r\n    \"email\":\"postman{{$timestamp}}@test.com\",\r\n    \"password\":\"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login test",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Payload must be valid and have a body\", function () { \r",
+							"     pm.response.to.be.success; \r",
+							"     pm.response.to.be.withBody;\r",
+							"     pm.response.to.be.json; \r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"        \"properties\":{\r",
+							"        \"token\":{\"type\": \"string\"},\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.test('Post schema is valid', function(){\r",
+							"    pm.expect(tv4.validate(pm.response.json, schema)).to.be.true;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"token\", JSON.parse(responseBody).token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"{{email}}\",\r\n    \"password\":\"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
